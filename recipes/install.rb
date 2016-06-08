@@ -12,7 +12,7 @@ puts "####{cookbook_name}::#{recipe_name} #{Time.now.inspect}: Starting compile 
 execute 'install weblogic server' do
   user node['weblogic']['user']
   group node['weblogic']['group']
-  command "java -jar #{node['weblogic']['install_image']}"
+  command "java -Xmx#{node['weblogic']['java']['mx']} -jar #{node['weblogic']['install_image']} -silent -responseFile #{node['weblogic']['response_file']} -invPtrLoc #{node['weblogic']['inventory_pointer_file']}"
   not_if { Dir.exist?("#{node['weblogic']['mw_home']}") }
 end
 
